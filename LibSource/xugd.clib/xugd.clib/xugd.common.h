@@ -4,7 +4,7 @@
 //////////////////////////////////////////////////////////////////////////
 // @FILE: xugd.common.h
 // @LIB: xugd.clib.lib/xugd.clib_d.lib
-// @DESCRIPTION: ¶¨ÒåC++ÖĞ³£ÓÃµÄ²Ù×÷ºê¶¨Òå£¬°²ÈçÏÂ·½Ê½ÒıÓÃ¿â
+// @DESCRIPTION: å®šä¹‰C++ä¸­å¸¸ç”¨çš„æ“ä½œå®å®šä¹‰ï¼Œå®‰å¦‚ä¸‹æ–¹å¼å¼•ç”¨åº“
 //	#ifdef _DEBUG
 //	#pragma comment(lib, "xugd.clib_d.lib")
 //	#else
@@ -13,7 +13,7 @@
 // @VERSION: 1.0.15.907
 //
 // @RECORD:
-//	±àĞ´£ºXugd£¬2015-09-07£¬³õÊ¼°æ±¾¡£
+//	ç¼–å†™ï¼šXugdï¼Œ2015-09-07ï¼Œåˆå§‹ç‰ˆæœ¬ã€‚
 //////////////////////////////////////////////////////////////////////////
 
 #include <iostream>
@@ -27,7 +27,7 @@
 //	}  
 //#endif
 
-// ÓÃÓÚĞŞÊÎ±ê×¼CÔ¼¶¨µÄµ¼³öº¯Êı
+// ç”¨äºä¿®é¥°æ ‡å‡†Cçº¦å®šçš„å¯¼å‡ºå‡½æ•°
 // XUGD_BEGIN_CAPI_DECLARE
 //  void MyFunctions(...);
 //	  ....
@@ -50,13 +50,13 @@ namespace xugd{	namespace clib{
 #define XCLIBCLASS_DECLARE		__declspec(dllimport)
 #endif
 
-// ¿ÉÍ¨¹ı¼Ì³Ğ<boost/noncopyable.hpp>ÖĞµÄnoncopyableÀ´½ûÖ¹Àà¸´ÖÆÓëcopy¹¹Ôì
+// å¯é€šè¿‡ç»§æ‰¿<boost/noncopyable.hpp>ä¸­çš„noncopyableæ¥ç¦æ­¢ç±»å¤åˆ¶ä¸copyæ„é€ 
 #define CxForbidCopyFun(cName_)	\
 	cName_ & operator=(const cName_ &);	\
 	cName_(const cName_ &);
 
-// »ñÈ¡Êı×éµÄ´óĞ¡£¬Óë(sizeof(ary)/sizeof(ary[0])ÏàµÈ£»
-// Ö»ÄÜÓÃÓÚÊı×é£¨×Ö·û´®Êı×é´óĞ¡°üÀ¨½áÎ²0£©£¬²»ÄÜ×÷ÓÃÓÚÖ¸Õë
+// è·å–æ•°ç»„çš„å¤§å°ï¼Œä¸(sizeof(ary)/sizeof(ary[0])ç›¸ç­‰ï¼›
+// åªèƒ½ç”¨äºæ•°ç»„ï¼ˆå­—ç¬¦ä¸²æ•°ç»„å¤§å°åŒ…æ‹¬ç»“å°¾0ï¼‰ï¼Œä¸èƒ½ä½œç”¨äºæŒ‡é’ˆ
 template<typename T, size_t N>
 int CxArraySize(T (&ary_)[N])
 {
@@ -79,6 +79,20 @@ int CxArraySize(T (&ary_)[N])
 #define CxWstrSetEmpty(_pStr)	(_pStr[0]=L'\0')
 
 #define CxZeroMemory(_pMem, _nSize)	memset(_pMem, 0, _nSize)
+	
+#define CxSafeDelete(var) \
+  do { \
+    if(NULL != var){ \
+      delete var; \
+      var = NULL; \
+    } \
+  }while(0)
+    
+#define CxQuitWithEnter() \
+  do { \
+    std::cout<<"Press <ENTER> to quit: "; \
+    std::cin.get(); \
+  }while(0)
 
 #define CxFieldOffset(_cType, _cField)	((int)(LONG_PTR)&(((_cType *)0)->_cField))
 
