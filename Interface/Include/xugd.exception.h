@@ -18,12 +18,12 @@ namespace xugd{	namespace clib{
 	//////////////////////////////////////////////////////////////////////////
 	// 所有异常的基类
 	//////////////////////////////////////////////////////////////////////////
-	class XException:public std::exception{
+	class XuException:public std::exception{
 	public:
-		XException(const char* szMsg_, int nError_)
+		XuException(const char* szMsg_, int nError_)
 			: std::exception(szMsg_), m_nError(nError_)
 		{ }
-		virtual ~XException(void) {}
+		virtual ~XuException(void) {}
 
 		//////////////////////////////////////////////////////////////////////////
 		// 获取错误信息
@@ -59,7 +59,7 @@ namespace xugd{	namespace clib{
 		const char* toString(void) const
 		{
 			static char szPrint[500] = {0};
-			sprintf_s(szPrint, 500, "%s(%s[%d])", exception::what(), getErrInfo(), m_nError);
+			sprintf_s(szPrint, 500, "%s(%s[%d])", exception::what(), getErrInfo().c_str(), m_nError);
 			return szPrint;
 		}
 
@@ -67,11 +67,11 @@ namespace xugd{	namespace clib{
 		int m_nError;
 	};
 
-	class XSizeException:public XException
+	class XuSizeException:public XuException
 	{
 	public:
-		XSizeException(const char* szMsg_, int nSize_)
-			:XException(szMsg_, 1462)
+		XuSizeException(const char* szMsg_, int nSize_)
+			:XuException(szMsg_, 1462)
 		{
 			m_nSize = nSize_;
 		}
@@ -81,9 +81,9 @@ namespace xugd{	namespace clib{
 			return m_nSize;
 		}
 
-		string getErrInfo(void) const
+		std::string getErrInfo(void) const
 		{
-			ostringstream outStr;
+			std::ostringstream outStr;
 			outStr<<"Size at least "<<m_nSize;
 			return outStr.str();
 		}
